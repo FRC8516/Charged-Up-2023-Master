@@ -20,55 +20,51 @@ public final class Constants {
          //left drive
         public static final int kFrontLeftChannel = 1;
         public static final int kRearLeftChannel = 2;
-        
         //right drive
         public static final int kFrontRightChannel = 3;
         public static final int kRearRightChannel = 4;
     }
 
     public static final class ManipulatorConstants {
-
         //Elevator
         public static final int kElevatorMotor = 10;
-        
         //Arm
-        public static final int kFirstMotor = 11;
-        public static final int kSecondConyMotor = 12;
-
+        public static final int kArmMotor1 = 11;
+        public static final int kArmMotor2 = 12;
     }
 
     //OI Constants
     public static final class OIConstants {
-
         //Controllers
         public static final int kdriveJoyStick = 0;
         public static final int kactuatorJoyStick = 1;
-
     }    
     
     public static final class EncoderConstants{
-
         /**
-         * Which PID slot to pull gains from. Starting 2018, you can choose from
-         * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
-         * configuration.
-         */
+	    * Which PID slot to pull gains from. Starting 2018, you can choose from
+	    * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
+	    * configuration.
+	    */
 	    public static final int kSlotIdx = 0;
 
-        /*
-        * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
-        * now we just want the primary one.
-        */
+	    /**
+	    * Talon FX supports multiple (cascaded) PID loops. For
+	    * now we just want the primary one.
+	    */
 	    public static final int kPIDLoopIdx = 0;
 
-        /*
-        * set to zero to skip waiting for confirmation, set to nonzero to wait and
-        * report to DS if action fails.
-        */
+	    /**
+	    * set to zero to skip waiting for confirmation, set to nonzero to wait and
+	    * report to DS if action fails.
+	    */
 	    public static final int kTimeoutMs = 30;
 
+	    /**
+	    * Gains used in Motion Magic, to be adjusted accordingly
+        * Gains(kp, ki, kd, kf, izone, peak output);
+        */
+        public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
     }
-
-
 }
 
