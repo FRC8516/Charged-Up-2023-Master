@@ -27,10 +27,10 @@ public final class Constants {
 
     public static final class ManipulatorConstants {
         //Elevator
-        public static final int kElevatorMotor = 10;
+        public static final int kElevatorMotor = 7;
         //Arm
-        public static final int kArmMotor1 = 11;
-        public static final int kArmMotor2 = 12;
+        public static final int kArmMotor1 = 5;
+        public static final int kArmMotor2 = 6;
     }
 
     //OI Constants
@@ -40,7 +40,7 @@ public final class Constants {
         public static final int kactuatorJoyStick = 1;
     }    
     
-    public static final class EncoderConstants{
+    public static final class EncoderConstants {
         /**
 	    * Which PID slot to pull gains from. Starting 2018, you can choose from
 	    * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
@@ -65,6 +65,16 @@ public final class Constants {
         * Gains(kp, ki, kd, kf, izone, peak output);
         */
         public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
+
+        
+    }
+
+    // Robot position constants
+    public static final class RobotArmPos {
+
+        // 90 degree arm settings
+        public static final float extendStage1 = (float) 3.5;
+        public static final float extendStage2 = (float) 2.5;
     }
 }
 

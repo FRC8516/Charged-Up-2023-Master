@@ -6,18 +6,20 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class Gripper extends SubsystemBase {
   // DoubleSolenoid corresponds to a double solenoid.
   private final DoubleSolenoid m_doubleSolenoid =
-      new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 2);
+      new DoubleSolenoid(PneumaticsModuleType.REVPH, 13, 15);
 
+  private PneumaticHub mPneumaticHub = new PneumaticHub();
   private int kSolenoidButton;
 
   /** Creates a new Gripper. */
   public Gripper() {
-
+    mPneumaticHub.enableCompressorDigital();
   }
 
   @Override
@@ -37,4 +39,9 @@ public class Gripper extends SubsystemBase {
       kSolenoidButton = 1;
     }
   }
+
+  public void Stop(){
+    return;
+  }
+
 }
