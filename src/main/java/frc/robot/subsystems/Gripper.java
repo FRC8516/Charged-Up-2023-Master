@@ -13,12 +13,13 @@ public class Gripper extends SubsystemBase {
   // DoubleSolenoid corresponds to a double solenoid.
   private final DoubleSolenoid m_doubleSolenoid =
       new DoubleSolenoid(PneumaticsModuleType.REVPH, 13, 15);
-
+  // Create constructor for pneumatic hub.
   private PneumaticHub mPneumaticHub = new PneumaticHub();
   private int kSolenoidButton;
 
   /** Creates a new Gripper. */
   public Gripper() {
+    //Enable the compressor...either have to use digital or analog here.  Else compressor does not run!
     mPneumaticHub.enableCompressorDigital();
   }
 

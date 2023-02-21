@@ -26,11 +26,11 @@ public final class Constants {
     }
 
     public static final class ManipulatorConstants {
-        //Elevator
-        public static final int kElevatorMotor = 7;
         //Arm
         public static final int kArmMotor1 = 5;
         public static final int kArmMotor2 = 6;
+        //Elevator
+        public static final int kElevatorMotor = 7;
     }
 
     //OI Constants
@@ -65,16 +65,18 @@ public final class Constants {
         * Gains(kp, ki, kd, kf, izone, peak output);
         */
         public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
-
         
     }
 
     // Robot position constants
     public static final class RobotArmPos {
-
-        // 90 degree arm settings
-        public static final float extendStage1 = (float) 3.5;
-        public static final float extendStage2 = (float) 2.5;
+        //Key values for passing from commands to subsystems
+        public static final String ScoreHigh = "Score_High";
+        public static final String ScoreMid  = "Score_Mid";
+        public static final String ScoreLow = "Score_Low";
+        public static final String Default = "Default";
+        public static final String Floor = "Floor";
+        public static final String Load = "LoadStation";
     }
 }
 

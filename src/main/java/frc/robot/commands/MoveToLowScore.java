@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants.RobotArmPos;
 import frc.robot.subsystems.ArmStage1;
 import frc.robot.subsystems.ArmStage2;
 import frc.robot.subsystems.Elevator;
@@ -17,9 +18,9 @@ public class MoveToLowScore extends ParallelCommandGroup {
   public MoveToLowScore(Elevator mElevator, ArmStage2 mArmStage2, ArmStage1 mArmStage1) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveElevatorToPosition(mElevator, "Score_LL"),
-                new MoveArmStage2(mArmStage2, "Score_LL"),
-                new MoveArmStage1(mArmStage1, "Score_LL"));
+    addCommands(new MoveElevatorToPosition(mElevator, RobotArmPos.ScoreLow),
+                new MoveArmStage2(mArmStage2, RobotArmPos.ScoreLow),
+                new MoveArmStage1(mArmStage1, RobotArmPos.ScoreLow));
 
   }
 } 

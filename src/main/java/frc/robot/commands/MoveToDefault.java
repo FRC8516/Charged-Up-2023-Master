@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.RobotArmPos;
 import frc.robot.subsystems.ArmStage1;
 import frc.robot.subsystems.ArmStage2;
@@ -13,14 +13,13 @@ import frc.robot.subsystems.Elevator;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class MoveToMidScore extends ParallelCommandGroup {
-  /** Creates a new MoveToHighScore. */
-  public MoveToMidScore(Elevator mElevator, ArmStage2 mArmStage2, ArmStage1 mArmStage1) {
+public class MoveToDefault extends SequentialCommandGroup {
+  /** Creates a new MoveToDefault. */
+  public MoveToDefault(Elevator m_Elevator, ArmStage1 m_ArmStage1, ArmStage2 m_ArmStage2) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveElevatorToPosition(mElevator, RobotArmPos.ScoreMid),
-                new MoveArmStage2(mArmStage2, RobotArmPos.ScoreMid),
-                new MoveArmStage1(mArmStage1, RobotArmPos.ScoreMid));
-
+    addCommands(new MoveArmStage2(m_ArmStage2,RobotArmPos.Default).withTimeout(0.1),
+              new MoveArmStage1(m_ArmStage1,RobotArmPos.Default).withTimeout(0.1),
+              new MoveElevatorToPosition(m_Elevator, RobotArmPos.Default));
   }
 }

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.EncoderConstants;
 import frc.robot.Constants.ManipulatorConstants;
+import frc.robot.Constants.RobotArmPos;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
@@ -19,16 +20,19 @@ public class Elevator extends SubsystemBase {
  	 private final WPI_TalonFX m_ElevatorMotor = new WPI_TalonFX(ManipulatorConstants.kElevatorMotor, "rio");
   	/** How much smoothing [0,8] to use during MotionMagic */
 	int _smoothing = 0;
-	 //backup key values not returned from perference table on shuffleboard
-	 final double LowScore = 0.0;      //22.0; *max height
-	 final double HighScore = 20.0;
+	 //backup key values not returned from perference table on shuffleboard //44 revs to max height
+	 final double LowScore = 5.0;
+	 final double HighScore = 40.0;
 	 final double MidScore = 10.0;
 	 final double Default = 0.0;
-	 // Used to get numbers from the smart dashboard perference values
-	 final String ElevatorHigh = "Score_HL";
-	 final String ElevatorMid = "Score_ML";
-	 final String ElevatorLow = "Score_LL";
-	 final String ElevatorDefault = "Default";
+	 final double FloorPickup = 15.0;
+	 final double LoadPosition = 25.0;
+	//Use to get from the preference table
+	 final String ElevatorHigh = "Elevator High";
+	 final String ElevatorMid = "Elevator Mid";
+	 final String ElevatorLow = "Elevator Low";
+	 final String ElevatorFloor = "Elevator Floor";
+	 final String ElevatorLoad = "Elevator Station";
 	 //local setpoint for moving to position by magic motion
 	 private double setPoint;
 	 private double backUp;
@@ -40,7 +44,7 @@ public class Elevator extends SubsystemBase {
 
 		/* Configure Sensor Source for Pirmary PID */
 		m_ElevatorMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, EncoderConstants.kPIDLoopIdx,
-      EncoderConstants.kTimeoutMs);
+        EncoderConstants.kTimeoutMs);
 
 		/* set deadband to super small 0.001 (0.1 %).
 			The default deadband is 0.04 (4 %) */
@@ -56,9 +60,8 @@ public class Elevator extends SubsystemBase {
 		/*
 		 * Talon FX does not need sensor phase set for its integrated sensor
 		 * This is because it will always be correct if the selected feedback device is integrated sensor (default value)
-		 * and the user calls getSelectedSensor* to get the sensor's position/velocity.
-		 *
-
+		 * and the user calls getSelectedSensor* to get the sensor's position/velocity. */
+		 
 		/* Set relevant frame periods to be at least as fast as periodic rate */
 		m_ElevatorMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, EncoderConstants.kTimeoutMs);
       	m_ElevatorMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, EncoderConstants.kTimeoutMs);
@@ -81,7 +84,7 @@ public class Elevator extends SubsystemBase {
 		m_ElevatorMotor.configMotionAcceleration(9000, EncoderConstants.kTimeoutMs);
 
 		/* Zero the sensor once on robot boot up */
-			m_ElevatorMotor.setSelectedSensorPosition(0, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
+		m_ElevatorMotor.setSelectedSensorPosition(0, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
   }
 
   @Override
@@ -93,38 +96,49 @@ public class Elevator extends SubsystemBase {
   public void SetElevatorToPosition(String Key) {
     //set up the grab from values at Smart Dashboard perference table
 	switch (Key) {
-		case ElevatorLow:;
+		case RobotArmPos.ScoreLow:;
 			//Elevator Low
 		  	backUp = LowScore;
 			Key = ElevatorLow;
 			break;
-		case ElevatorMid:;
+		case RobotArmPos.ScoreMid:;
 		    //Elevator Mid
 		    backUp = MidScore;
 			Key = ElevatorMid;
 			break;
-		case ElevatorHigh:;
+		case RobotArmPos.ScoreHigh:;
 		    //Elevator Mid
 		    backUp = HighScore;
 			Key = ElevatorHigh;
 			break;
-		case ElevatorDefault:;
+		case RobotArmPos.Default:;
 			//Elevator default
 			backUp = Default;
-			Key = ElevatorDefault;
+			Key = RobotArmPos.Default;
+			break;
+		case RobotArmPos.Floor:;
+			//Elevator Floor
+			backUp = FloorPickup;
+			Key = ElevatorFloor;
+			break;
+		case RobotArmPos.Load:;
+			//Elevator Loading station
+			backUp = LoadPosition;
+			Key = ElevatorFloor;
 			break;
 		}
 	   
-	  //gets the current value
-	  setPoint = getPreferencesDouble(Key, backUp);  
+	//gets the current value
+	setPoint = getPreferencesDouble(Key, backUp);  
 	
 	/* Motion Magic */
-	  /* 2048 ticks/rev * x Rotations in either direction */
-	  double targetPos = setPoint * 4096;
-	  
-	  this.MoveToPosition(targetPos);
+	/* 2048 ticks/rev * x Rotations in either direction */
+	double targetPos = setPoint * 2048;
+	//sets the new position to the motor controller.
+	this.MoveToPosition(targetPos);
   }
 
+  //Motor control mode motion magic to set point
   private void MoveToPosition(double targetPos) {
 	m_ElevatorMotor.set(TalonFXControlMode.MotionMagic, targetPos);
   }
@@ -137,14 +151,11 @@ public class Elevator extends SubsystemBase {
     * table.
 	 * @return 
     */
-     private double getPreferencesDouble(String key, double backup) {
-		
-     if (backup != Preferences.getDouble(key, backup)) {
-
-		 return Preferences.getDouble(key, backup);
-     }
-     else {
-		return backup;
-	 }
-   }
+    private double getPreferencesDouble(String key, double backup) {
+		if (!Preferences.containsKey(key)) {
+		  Preferences.initDouble(key, backup);
+		  Preferences.setDouble(key, backup);
+		}
+		return Preferences.getDouble(key, backup);
+	  }
 }
