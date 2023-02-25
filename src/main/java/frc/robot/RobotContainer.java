@@ -88,6 +88,7 @@ public class RobotContainer {
 
     //Gripper open/close
     m_driverController.rightTrigger().onTrue(m_OpenGripper);
+    
     m_driverController.leftTrigger().onTrue(m_CloseGripper);
     
     //Request game pieces to human player by changing led lights

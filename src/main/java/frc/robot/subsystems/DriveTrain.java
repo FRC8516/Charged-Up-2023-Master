@@ -33,9 +33,16 @@ public class DriveTrain extends SubsystemBase {
     // You may need to change or remove this to match your robot.
     m_frontRightMotor.setInverted(false);
     m_rearRightMotor.setInverted(false);
+    
+    //ensure motors are safety is off
+    m_frontLeftMotor.setSafetyEnabled(false);
+    m_rearLeftMotor.setSafetyEnabled(false);
+    m_frontRightMotor.setSafetyEnabled(false);
+    m_rearRightMotor.setSafetyEnabled(false);
 
     m_robotDrive = new DifferentialDrive(m_frontLeftMotor, m_frontRightMotor);
-    //Set Masters and Followers
+    
+    // Set Masters and Followers
     m_rearLeftMotor.follow(m_frontLeftMotor);
     m_rearRightMotor.follow(m_frontRightMotor);
     // Configures the Drive Train Falcon's to default configuration

@@ -58,14 +58,15 @@ public final class Constants {
 	    * set to zero to skip waiting for confirmation, set to nonzero to wait and
 	    * report to DS if action fails.
 	    */
-	    public static final int kTimeoutMs = 30;
+	    public static final int kTimeoutMs = 40;
 
 	    /**
 	    * Gains used in Motion Magic, to be adjusted accordingly
         * Gains(kp, ki, kd, kf, izone, peak output);
         */
         public static final Gains kGains = new Gains(0.2, 0.0, 0.0, 0.2, 0, 1.0);
-        
+        public static final Gains kStage1Gains = new Gains(0.1023,0.0,0.0,0.503,0,1.0);
+        public static final Gains kStage2Gains = new Gains(0.2,0.0,0.0,0.2,0,1);
     }
 
     // Robot position constants

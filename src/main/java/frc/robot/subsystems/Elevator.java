@@ -24,7 +24,7 @@ public class Elevator extends SubsystemBase {
 	 final double LowScore = 5.0;
 	 final double HighScore = 40.0;
 	 final double MidScore = 10.0;
-	 final double Default = 0.0;
+	 final double Default = 3.0;
 	 final double FloorPickup = 15.0;
 	 final double LoadPosition = 25.0;
 	//Use to get from the preference table

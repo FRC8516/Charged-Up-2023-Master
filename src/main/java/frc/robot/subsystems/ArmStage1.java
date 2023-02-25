@@ -72,10 +72,10 @@ public class ArmStage1 extends SubsystemBase {
     m_ArmStageMotor1.configPeakOutputReverse(-1, EncoderConstants.kTimeoutMs);
 	/* Set Motion Magic gains in slot0 - see documentation */
 	m_ArmStageMotor1.selectProfileSlot(EncoderConstants.kSlotIdx, EncoderConstants.kPIDLoopIdx);
-    m_ArmStageMotor1.config_kF(EncoderConstants.kSlotIdx, EncoderConstants.kGains.kF, EncoderConstants.kTimeoutMs);
-    m_ArmStageMotor1.config_kP(EncoderConstants.kSlotIdx, EncoderConstants.kGains.kP, EncoderConstants.kTimeoutMs);
-    m_ArmStageMotor1.config_kI(EncoderConstants.kSlotIdx, EncoderConstants.kGains.kI, EncoderConstants.kTimeoutMs);
-    m_ArmStageMotor1.config_kD(EncoderConstants.kSlotIdx, EncoderConstants.kGains.kD, EncoderConstants.kTimeoutMs);
+    m_ArmStageMotor1.config_kF(EncoderConstants.kSlotIdx, EncoderConstants.kStage1Gains.kF, EncoderConstants.kTimeoutMs);
+    m_ArmStageMotor1.config_kP(EncoderConstants.kSlotIdx, EncoderConstants.kStage1Gains.kP, EncoderConstants.kTimeoutMs);
+    m_ArmStageMotor1.config_kI(EncoderConstants.kSlotIdx, EncoderConstants.kStage1Gains.kI, EncoderConstants.kTimeoutMs);
+    m_ArmStageMotor1.config_kD(EncoderConstants.kSlotIdx, EncoderConstants.kStage1Gains.kD, EncoderConstants.kTimeoutMs);
 	/* Set acceleration and vcruise velocity - see documentation */
 	m_ArmStageMotor1.configMotionCruiseVelocity(6500, EncoderConstants.kTimeoutMs);
 	m_ArmStageMotor1.configMotionAcceleration(800, EncoderConstants.kTimeoutMs);
