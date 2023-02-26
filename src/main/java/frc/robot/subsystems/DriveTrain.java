@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,7 +27,7 @@ public class DriveTrain extends SubsystemBase {
   private DifferentialDrive m_robotDrive;
   double joyThreshold = 0.05; // Default threshold value from XboxController
   
- // private WPI_PigeonIMU m_pigeon;
+  private WPI_PigeonIMU m_pigeon;
 
   public DriveTrain() {
     
@@ -33,7 +35,9 @@ public class DriveTrain extends SubsystemBase {
     // You may need to change or remove this to match your robot.
     m_frontRightMotor.setInverted(false);
     m_rearRightMotor.setInverted(false);
-    
+    // Set Masters and Followers
+    m_rearLeftMotor.follow(m_frontLeftMotor);
+    m_rearRightMotor.follow(m_frontRightMotor);
     //ensure motors are safety is off
     m_frontLeftMotor.setSafetyEnabled(false);
     m_rearLeftMotor.setSafetyEnabled(false);
@@ -42,9 +46,6 @@ public class DriveTrain extends SubsystemBase {
 
     m_robotDrive = new DifferentialDrive(m_frontLeftMotor, m_frontRightMotor);
     
-    // Set Masters and Followers
-    m_rearLeftMotor.follow(m_frontLeftMotor);
-    m_rearRightMotor.follow(m_frontRightMotor);
     // Configures the Drive Train Falcon's to default configuration
     m_frontLeftMotor.configFactoryDefault();
     m_rearLeftMotor.configFactoryDefault();
@@ -61,8 +62,8 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
      // Pushing Drive Encoder Data to the SmartDashboard
-   SmartDashboard.putNumber("LeftSensorPosition", m_frontLeftMotor.getSelectedSensorPosition(Constants.EncoderConstants.kPIDLoopIdx));
-   SmartDashboard.putNumber("RightSensorPosition", m_frontRightMotor.getSelectedSensorPosition(Constants.EncoderConstants.kPIDLoopIdx));
+    SmartDashboard.putNumber("LeftSensorPosition", m_frontLeftMotor.getSelectedSensorPosition(Constants.EncoderConstants.kPIDLoopIdx));
+    SmartDashboard.putNumber("RightSensorPosition", m_frontRightMotor.getSelectedSensorPosition(Constants.EncoderConstants.kPIDLoopIdx));
   }
   
 
@@ -72,6 +73,7 @@ public class DriveTrain extends SubsystemBase {
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
     m_robotDrive.arcadeDrive(-xSpeed, -ySpeed,true);
+    //m_robotDrive.curvatureDriveIK(-xSpeed, -xSpeed, true);
   }
 
   public void autoDrive(){

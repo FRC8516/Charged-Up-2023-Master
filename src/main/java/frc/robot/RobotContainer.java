@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -30,16 +28,13 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gripper;
 
 public class RobotContainer {
-  //Driver Station check for alliance to get color for the candle leds
-  private Alliance alliance = Alliance.Invalid;
-
   //Subsystems that will be used in the rest of the file
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Elevator m_Elevator = new Elevator();
   private final ArmStage1 m_ArmStage1 = new ArmStage1();
   private final ArmStage2 m_ArmStage2 = new ArmStage2();
   private final Gripper m_Gripper = new Gripper();
-  private final CandleControl m_CandleControl = new CandleControl();
+  public CandleControl m_CandleControl = new CandleControl();
   
   //Controllers that are used on the robot
   private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kdriveJoyStick);
@@ -88,36 +83,13 @@ public class RobotContainer {
 
     //Gripper open/close
     m_driverController.rightTrigger().onTrue(m_OpenGripper);
-    
     m_driverController.leftTrigger().onTrue(m_CloseGripper);
     
     //Request game pieces to human player by changing led lights
     m_driverController.a().onTrue(m_ConeRequestLedLights);
     m_driverController.b().onTrue(m_CubeRequestLedLights);
-
-    // m_actuatorController.x().whileTrue(
-     //   startEnd(() -> m_Gripper.OpenGripper(), m_Gripper.Stop(), m_Gripper));
-       
-       /*  controller.x().whileTrue(
-          startEnd(() -> wristSubsystem.moveWrist(.3), wristSubsystem::stop, wristSubsystem)); */
   }
   
-  //This checks the driver station for which alliance color we are
-  public void checkDSUpdate() {
-    Alliance currentAlliance = DriverStation.getAlliance();
-
-    // If we have data, and have a new alliance from last time
-    if (DriverStation.isDSAttached() && currentAlliance != alliance) {
-      //call the subsystem for setting the led lights
-      m_CandleControl.AllianceColor(currentAlliance);
-    }
-  } 
-
-  //changes led lights to green when the match goes into teleop mode
-  public void ChangeCandleLightsToGreen() {
-    m_CandleControl.InTeleOpMode();
-  }
-
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
   }

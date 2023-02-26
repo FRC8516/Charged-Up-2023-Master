@@ -38,6 +38,7 @@ public final class Constants {
         //Controllers
         public static final int kdriveJoyStick = 0;
         public static final int kactuatorJoyStick = 1;
+        public static final int CANdleID = 1;
     }    
     
     public static final class EncoderConstants {

@@ -80,8 +80,8 @@ public class Elevator extends SubsystemBase {
 		m_ElevatorMotor.config_kD(EncoderConstants.kSlotIdx, EncoderConstants.kGains.kD, EncoderConstants.kTimeoutMs);
 
 		/* Set acceleration and vcruise velocity - see documentation */  //15000, 6000
-		m_ElevatorMotor.configMotionCruiseVelocity(45000, EncoderConstants.kTimeoutMs);
-		m_ElevatorMotor.configMotionAcceleration(9000, EncoderConstants.kTimeoutMs);
+		m_ElevatorMotor.configMotionCruiseVelocity(25000, EncoderConstants.kTimeoutMs);
+		m_ElevatorMotor.configMotionAcceleration(6000, EncoderConstants.kTimeoutMs);
 
 		/* Zero the sensor once on robot boot up */
 		m_ElevatorMotor.setSelectedSensorPosition(0, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
