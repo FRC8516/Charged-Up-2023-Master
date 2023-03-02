@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,7 +26,7 @@ public class DriveTrain extends SubsystemBase {
   private DifferentialDrive m_robotDrive;
   double joyThreshold = 0.05; // Default threshold value from XboxController
   
-  private WPI_PigeonIMU m_pigeon;
+ // private WPI_PigeonIMU m_pigeon;
 
   public DriveTrain() {
     
@@ -40,9 +39,9 @@ public class DriveTrain extends SubsystemBase {
     m_rearRightMotor.follow(m_frontRightMotor);
     //ensure motors are safety is off
     m_frontLeftMotor.setSafetyEnabled(false);
-    m_rearLeftMotor.setSafetyEnabled(false);
+   // m_rearLeftMotor.setSafetyEnabled(false);
     m_frontRightMotor.setSafetyEnabled(false);
-    m_rearRightMotor.setSafetyEnabled(false);
+   // m_rearRightMotor.setSafetyEnabled(false);
 
     m_robotDrive = new DifferentialDrive(m_frontLeftMotor, m_frontRightMotor);
     
@@ -55,7 +54,7 @@ public class DriveTrain extends SubsystemBase {
     m_frontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
     m_frontRightMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
     //reset IMU
-    //m_pigeon.reset();  
+   // m_pigeon.reset();  
   }
 
   @Override
@@ -66,14 +65,13 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("RightSensorPosition", m_frontRightMotor.getSelectedSensorPosition(Constants.EncoderConstants.kPIDLoopIdx));
   }
   
-
   // Drive Type
   public void drive(double ySpeed, double xSpeed){
     // Drive with arcade drive.
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
     m_robotDrive.arcadeDrive(-xSpeed, -ySpeed,true);
-    //m_robotDrive.curvatureDriveIK(-xSpeed, -xSpeed, true);
+    //DifferentialDrive.curvatureDriveIK(-xSpeed, -xSpeed, true);
   }
 
   public void autoDrive(){

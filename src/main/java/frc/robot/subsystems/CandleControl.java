@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LedLights;
 import frc.robot.Constants.OIConstants;
-
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import com.ctre.phoenix.led.ColorFlowAnimation.Direction;
@@ -19,15 +18,14 @@ import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 
 public class CandleControl extends SubsystemBase {
    //Driver Station check for alliance to get color for the candle leds
-   private Alliance alliance = Alliance.Invalid;
-   private final int LEDS_PER_ANIMATION = 30;
+    private Alliance alliance = Alliance.Invalid;
+    private final int LEDS_PER_ANIMATION = 30;
     private final CANdle m_candle = new CANdle(OIConstants.CANdleID,"rio");
     private int m_candleChannel = 0;
     private boolean m_clearAllAnims = false;
     private boolean m_last5V = false;
     private boolean m_animDirection = false;
     private boolean m_setAnim = false;
-
     private Animation m_toAnimate = null;
 
     private enum AnimationTypes {
@@ -81,24 +79,30 @@ public class CandleControl extends SubsystemBase {
     this.ChangeLedColor(LedLights.Green);
   }
 
-  //Used to make generic calls to change lights
+  //Used to make generic calls to changelights
+ /*  RGB Lights
+      Green = 0, 255, 0
+      Red   = 255, 0, 0
+      Blue = 0, 0, 255
+      Yellow = 255, 255, 0
+      Purple = 128, 0, 128
+      Orange = 255, 128, 0 */
   public void ChangeLedColor(String mColor) {
-
     switch (mColor) {
       case LedLights.Yellow:;  //Nofity Human Player that drive team needs a cone.
-        
+          m_candle.setLEDs(255, 255, 0);
         break;
       case LedLights.Purple:; //Nofity Human Player that drive team needs a cube.
-        
+        m_candle.setLEDs(128, 0, 128);
         break;
       case LedLights.Blue:;
-
+        m_candle.setLEDs(0, 0, 255);
         break;
       case LedLights.Red:;
-
+        m_candle.setLEDs(255, 0, 0);
         break;
       case LedLights.Green:;
-
+        m_candle.setLEDs(0, 255, 0);
         break;
     }
 

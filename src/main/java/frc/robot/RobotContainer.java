@@ -74,17 +74,17 @@ public class RobotContainer {
 
   private void configureBindings() {
     //Configure Joysticks actuators
-    m_actuatorController.x().onTrue(m_MoveToLowScore);
-    m_actuatorController.y().onTrue(m_MoveToMidScore);
-    m_actuatorController.b().onTrue(m_MoveToHighScore);
-    m_actuatorController.a().onTrue(m_MoveToFloor);
+    m_actuatorController.a().onTrue(m_MoveToLowScore);
+    m_actuatorController.x().onTrue(m_MoveToMidScore);
+    m_actuatorController.y().onTrue(m_MoveToHighScore);
+    m_actuatorController.b().onTrue(m_MoveToFloor);
     m_actuatorController.rightBumper().onTrue(m_MoveToDefault);
     m_actuatorController.leftTrigger().onTrue(m_MoveToLoadingStation);
 
     //Gripper open/close
     m_driverController.rightTrigger().onTrue(m_OpenGripper);
     m_driverController.leftTrigger().onTrue(m_CloseGripper);
-    
+     
     //Request game pieces to human player by changing led lights
     m_driverController.a().onTrue(m_ConeRequestLedLights);
     m_driverController.b().onTrue(m_CubeRequestLedLights);

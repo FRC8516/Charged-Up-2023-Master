@@ -24,7 +24,7 @@ public class Elevator extends SubsystemBase {
 	 final double LowScore = 5.0;
 	 final double HighScore = 40.0;
 	 final double MidScore = 10.0;
-	 final double Default = 3.0;
+	 final double Default = 8.0;
 	 final double FloorPickup = 15.0;
 	 final double LoadPosition = 25.0;
 	//Use to get from the preference table
@@ -33,6 +33,7 @@ public class Elevator extends SubsystemBase {
 	 final String ElevatorLow = "Elevator Low";
 	 final String ElevatorFloor = "Elevator Floor";
 	 final String ElevatorLoad = "Elevator Station";
+	 final String ElevatorDefault = "Elvator Home";
 	 //local setpoint for moving to position by magic motion
 	 private double setPoint;
 	 private double backUp;
@@ -114,7 +115,7 @@ public class Elevator extends SubsystemBase {
 		case RobotArmPos.Default:;
 			//Elevator default
 			backUp = Default;
-			Key = RobotArmPos.Default;
+			Key = ElevatorDefault;
 			break;
 		case RobotArmPos.Floor:;
 			//Elevator Floor

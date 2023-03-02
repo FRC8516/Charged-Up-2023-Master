@@ -18,8 +18,8 @@ public class MoveToDefault extends SequentialCommandGroup {
   public MoveToDefault(Elevator m_Elevator, ArmStage1 m_ArmStage1, ArmStage2 m_ArmStage2) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new MoveArmStage2(m_ArmStage2,RobotArmPos.Default).withTimeout(0.1),
-              new MoveArmStage1(m_ArmStage1,RobotArmPos.Default).withTimeout(0.1),
+    addCommands(new MoveArmStage2(m_ArmStage2,RobotArmPos.Default).withTimeout(0.15),
+              new MoveArmStage1(m_ArmStage1,RobotArmPos.Default).withTimeout(0.15),
               new MoveElevatorToPosition(m_Elevator, RobotArmPos.Default));
   }
 }
