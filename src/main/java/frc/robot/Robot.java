@@ -18,10 +18,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_robotContainer = new RobotContainer();
     //see if we can read the ds alliance color
-   // m_robotContainer.m_CandleControl.checkDSUpdate();
+    m_robotContainer.m_CandleControl.checkDSUpdate();
     //Setup Usb camera connection      
-    UsbCamera cam1 = CameraServer.startAutomaticCapture(1);
-    cam1.setFPS(30);
+    UsbCamera cam1 = CameraServer.startAutomaticCapture();
+    cam1.setFPS(10);
+    cam1.setResolution(150, 200);
   }
 
   @Override
@@ -41,7 +42,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //see if we can read the ds alliance color
-   // m_robotContainer.m_CandleControl.checkDSUpdate();
+    m_robotContainer.m_CandleControl.checkDSUpdate();
     //get the current autonomous command
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -62,7 +63,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     //Check led lights to green for teleop
-   // m_robotContainer.m_CandleControl.InTeleOpMode();
+    m_robotContainer.m_CandleControl.InTeleOpMode();
   }
 
   @Override

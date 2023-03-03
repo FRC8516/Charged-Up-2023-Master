@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -34,6 +35,12 @@ public class DriveTrain extends SubsystemBase {
     // You may need to change or remove this to match your robot.
     m_frontRightMotor.setInverted(false);
     m_rearRightMotor.setInverted(false);
+    
+    //Coast Mode
+    m_frontLeftMotor.setNeutralMode(NeutralMode.Coast);
+    m_frontRightMotor.setNeutralMode(NeutralMode.Coast);
+    m_rearLeftMotor.setNeutralMode(NeutralMode.Coast);
+    m_rearRightMotor.setNeutralMode(NeutralMode.Coast);
     // Set Masters and Followers
     m_rearLeftMotor.follow(m_frontLeftMotor);
     m_rearRightMotor.follow(m_frontRightMotor);
@@ -72,6 +79,20 @@ public class DriveTrain extends SubsystemBase {
     // and backward, and the X turns left and right.
     m_robotDrive.arcadeDrive(-xSpeed, -ySpeed,true);
     //DifferentialDrive.curvatureDriveIK(-xSpeed, -xSpeed, true);
+  }
+
+  public void SetBrakes () {
+    m_frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    m_frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    m_rearLeftMotor.setNeutralMode(NeutralMode.Brake);
+    m_rearRightMotor.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void SetCoastMode () {
+    m_frontLeftMotor.setNeutralMode(NeutralMode.Coast);
+    m_frontRightMotor.setNeutralMode(NeutralMode.Coast);
+    m_rearLeftMotor.setNeutralMode(NeutralMode.Coast);
+    m_rearRightMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   public void autoDrive(){

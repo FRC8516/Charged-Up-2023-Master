@@ -19,6 +19,8 @@ import frc.robot.commands.MoveToLoadingStation;
 import frc.robot.commands.MoveToLowScore;
 import frc.robot.commands.MoveToMidScore;
 import frc.robot.commands.OpenGripper;
+import frc.robot.commands.SetBrakeMode;
+import frc.robot.commands.SetCoastMode;
 import frc.robot.subsystems.ArmStage1;
 import frc.robot.subsystems.ArmStage2;
 import frc.robot.subsystems.CandleControl;
@@ -28,6 +30,14 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gripper;
 
 public class RobotContainer {
+   // The enum used as keys for selecting the command to run.
+   private enum CommandSelector {
+    ONE,
+    TWO,
+    THREE,
+    FOUR
+  }
+
   //Subsystems that will be used in the rest of the file
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Elevator m_Elevator = new Elevator();
@@ -35,11 +45,9 @@ public class RobotContainer {
   private final ArmStage2 m_ArmStage2 = new ArmStage2();
   private final Gripper m_Gripper = new Gripper();
   public CandleControl m_CandleControl = new CandleControl();
-  
   //Controllers that are used on the robot
   private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kdriveJoyStick);
   private final CommandXboxController m_actuatorController = new CommandXboxController(OIConstants.kactuatorJoyStick);
-
   //Commands -- Move actuators to setpoint);
   private final MoveToLowScore m_MoveToLowScore = new MoveToLowScore(m_Elevator,m_ArmStage2,m_ArmStage1);
   private final MoveToMidScore m_MoveToMidScore = new MoveToMidScore(m_Elevator,m_ArmStage2,m_ArmStage1);
@@ -53,6 +61,10 @@ public class RobotContainer {
   //Commands -- Led Light controls
   private final ChangeLedLights m_ConeRequestLedLights = new ChangeLedLights(m_CandleControl, LedLights.Yellow);
   private final ChangeLedLights m_CubeRequestLedLights = new ChangeLedLights(m_CandleControl, LedLights.Purple);
+  //Set brakes drive train
+  private final SetBrakeMode m_SetBrakes = new SetBrakeMode(m_driveTrain);
+  //Set Coast drive train
+  private final SetCoastMode m_CoastMode = new SetCoastMode(m_driveTrain);
 
  /******************************************************************************************
   ONLY used for testing!  Not to used for competition!
@@ -84,6 +96,9 @@ public class RobotContainer {
     //Gripper open/close
     m_driverController.rightTrigger().onTrue(m_OpenGripper);
     m_driverController.leftTrigger().onTrue(m_CloseGripper);
+    //Set brakes
+    m_driverController.x().onTrue(m_SetBrakes);
+    m_driverController.y().onTrue(m_CoastMode);
      
     //Request game pieces to human player by changing led lights
     m_driverController.a().onTrue(m_ConeRequestLedLights);

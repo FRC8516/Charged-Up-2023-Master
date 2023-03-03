@@ -5,18 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.CandleControl;
+import frc.robot.subsystems.DriveTrain;
 
-public class ChangeLedLights extends CommandBase {
-  private final CandleControl m_CandleControl;
-  private final String m_Color;
+public class SetCoastMode extends CommandBase {
+  private final DriveTrain mDriveTrain;
   
-  /** Creates a new ChangeLedLights. */
-  public ChangeLedLights(CandleControl mControl, String mColor) {
-    m_CandleControl = mControl;
-    m_Color = mColor;
+  /** Creates a new SetCoastMode. */
+  public SetCoastMode(DriveTrain m_DriveTrain) {
+    mDriveTrain = m_DriveTrain;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_CandleControl);
+    addRequirements(mDriveTrain);
   }
 
   // Called when the command is initially scheduled.
@@ -26,7 +24,7 @@ public class ChangeLedLights extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_CandleControl.ChangeLedColor(m_Color);
+    mDriveTrain.SetCoastMode();
   }
 
   // Called once the command ends or is interrupted.
