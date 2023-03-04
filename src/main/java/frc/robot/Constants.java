@@ -23,6 +23,8 @@ public final class Constants {
         //right drive
         public static final int kFrontRightChannel = 3;
         public static final int kRearRightChannel = 4;
+        //pigeon IMU
+        public static final int kPigeon = 1;
     }
 
     public static final class ManipulatorConstants {

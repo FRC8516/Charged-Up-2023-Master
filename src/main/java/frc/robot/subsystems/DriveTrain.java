@@ -4,10 +4,11 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,18 +17,15 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.EncoderConstants;
 
 public class DriveTrain extends SubsystemBase {
- 
   //Drive Motors
   private final WPI_TalonFX m_frontLeftMotor = new WPI_TalonFX(DriveConstants.kFrontLeftChannel);
   private final WPI_TalonFX m_rearLeftMotor = new WPI_TalonFX(DriveConstants.kRearLeftChannel);
   private final WPI_TalonFX m_frontRightMotor = new WPI_TalonFX(DriveConstants.kFrontRightChannel);
   private final WPI_TalonFX m_rearRightMotor = new WPI_TalonFX(DriveConstants.kRearRightChannel);
-
   // Drive Class
   private DifferentialDrive m_robotDrive;
-  double joyThreshold = 0.05; // Default threshold value from XboxController
-  
- // private WPI_PigeonIMU m_pigeon;
+  // IMU pigeon 2
+  private WPI_Pigeon2 m_pigeon = new WPI_Pigeon2(DriveConstants.kPigeon,"rio");
 
   public DriveTrain() {
     
@@ -46,12 +44,9 @@ public class DriveTrain extends SubsystemBase {
     m_rearRightMotor.follow(m_frontRightMotor);
     //ensure motors are safety is off
     m_frontLeftMotor.setSafetyEnabled(false);
-   // m_rearLeftMotor.setSafetyEnabled(false);
     m_frontRightMotor.setSafetyEnabled(false);
-   // m_rearRightMotor.setSafetyEnabled(false);
-
+    //Differential Drive train
     m_robotDrive = new DifferentialDrive(m_frontLeftMotor, m_frontRightMotor);
-    
     // Configures the Drive Train Falcon's to default configuration
     m_frontLeftMotor.configFactoryDefault();
     m_rearLeftMotor.configFactoryDefault();
@@ -61,7 +56,7 @@ public class DriveTrain extends SubsystemBase {
     m_frontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
     m_frontRightMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
     //reset IMU
-   // m_pigeon.reset();  
+    m_pigeon.reset();  
   }
 
   @Override
@@ -95,8 +90,25 @@ public class DriveTrain extends SubsystemBase {
     m_rearRightMotor.setNeutralMode(NeutralMode.Coast);
   }
 
-  public void autoDrive(){
-    
+  public void autoDrive() {
+    m_frontLeftMotor.set(ControlMode.PercentOutput, -0.7);
+    m_frontRightMotor.set(ControlMode.PercentOutput, -0.7);
+  }
+
+  public void Rotate(double angle) {
+    if (angle > 0) {
+      m_frontLeftMotor.set(ControlMode.PercentOutput, -angle);
+      m_frontRightMotor.set(ControlMode.PercentOutput, angle);
+    }
+    if (angle < 0) {
+      m_frontLeftMotor.set(ControlMode.PercentOutput, angle);
+      m_frontRightMotor.set(ControlMode.PercentOutput, -angle);
+    }
+  }
+
+  public void stopMotion() {
+    m_frontLeftMotor.set(ControlMode.PercentOutput, 0);
+    m_frontRightMotor.set(ControlMode.PercentOutput, 0);
   }
  
 }

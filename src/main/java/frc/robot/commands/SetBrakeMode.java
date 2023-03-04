@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
 public class SetBrakeMode extends CommandBase {
-  private final DriveTrain mDriveTrain;
+  private final DriveTrain mDriveTrain = new DriveTrain();
 
   /** Creates a new SetBrakeMode. */
-  public SetBrakeMode(DriveTrain m_DriveTrain) {
-    mDriveTrain = m_DriveTrain;
+  public SetBrakeMode() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(mDriveTrain);
   }
@@ -34,6 +33,6 @@ public class SetBrakeMode extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

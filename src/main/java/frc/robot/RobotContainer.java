@@ -5,11 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LedLights;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Auto1;
 import frc.robot.commands.ChangeLedLights;
 import frc.robot.commands.CloseGripper;
 import frc.robot.commands.MoveToDefault;
@@ -62,9 +62,11 @@ public class RobotContainer {
   private final ChangeLedLights m_ConeRequestLedLights = new ChangeLedLights(m_CandleControl, LedLights.Yellow);
   private final ChangeLedLights m_CubeRequestLedLights = new ChangeLedLights(m_CandleControl, LedLights.Purple);
   //Set brakes drive train
-  private final SetBrakeMode m_SetBrakes = new SetBrakeMode(m_driveTrain);
+  private final SetBrakeMode m_SetBrakes = new SetBrakeMode();
   //Set Coast drive train
-  private final SetCoastMode m_CoastMode = new SetCoastMode(m_driveTrain);
+  private final SetCoastMode m_CoastMode = new SetCoastMode();
+  //Autonomous
+  private final Auto1 m_auto1 = new Auto1(m_Elevator, m_ArmStage1, m_ArmStage2, m_Gripper, m_driveTrain);
 
  /******************************************************************************************
   ONLY used for testing!  Not to used for competition!
@@ -106,6 +108,6 @@ public class RobotContainer {
   }
   
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return m_auto1;
   }
 }
