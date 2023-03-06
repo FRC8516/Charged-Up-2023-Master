@@ -90,9 +90,9 @@ public class DriveTrain extends SubsystemBase {
     m_rearRightMotor.setNeutralMode(NeutralMode.Coast);
   }
 
-  public void autoDrive() {
-    m_frontLeftMotor.set(ControlMode.PercentOutput, -0.7);
-    m_frontRightMotor.set(ControlMode.PercentOutput, -0.7);
+  public void autoDrive(double speed) {
+    m_frontLeftMotor.set(ControlMode.PercentOutput, -speed);
+    m_frontRightMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void Rotate(double angle) {

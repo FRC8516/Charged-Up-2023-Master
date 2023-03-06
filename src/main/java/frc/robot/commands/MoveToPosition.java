@@ -5,9 +5,11 @@ import frc.robot.subsystems.DriveTrain;
 
 public class MoveToPosition extends CommandBase {
     private final DriveTrain m_driveTrain;
+    private final double m_speed;
       
-    public MoveToPosition(DriveTrain driveTrain) {
+    public MoveToPosition(DriveTrain driveTrain, double speed) {
       m_driveTrain = driveTrain;
+      m_speed = speed;
       addRequirements(m_driveTrain);
     }
   
@@ -19,7 +21,7 @@ public class MoveToPosition extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      m_driveTrain.autoDrive();
+      m_driveTrain.autoDrive(m_speed);
     }
   
     // Called once the command ends or is interrupted.
