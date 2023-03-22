@@ -26,6 +26,9 @@ public class DriveTrain extends SubsystemBase {
   private DifferentialDrive m_robotDrive;
   // IMU pigeon 2
   private WPI_Pigeon2 m_pigeon = new WPI_Pigeon2(DriveConstants.kPigeon,"rio");
+  private double m_dYawCurrent;
+ // private double m_dYawStart;
+  private double m_dYawTarget;
 
   public DriveTrain() {
     
@@ -42,15 +45,20 @@ public class DriveTrain extends SubsystemBase {
     // Set Masters and Followers
     m_rearLeftMotor.follow(m_frontLeftMotor);
     m_rearRightMotor.follow(m_frontRightMotor);
+   // m_robotDrive.setDeadband(0.03);
     //ensure motors are safety is off
     m_frontLeftMotor.setSafetyEnabled(false);
-    m_frontRightMotor.setSafetyEnabled(false);
+    m_rearLeftMotor.setSafetyEnabled(false);
+
     //Differential Drive train
     m_robotDrive = new DifferentialDrive(m_frontLeftMotor, m_frontRightMotor);
+    m_robotDrive.setSafetyEnabled(false);
+    m_robotDrive.setExpiration(0.2);
+    m_robotDrive.setDeadband(0.03);
     // Configures the Drive Train Falcon's to default configuration
     m_frontLeftMotor.configFactoryDefault();
     m_rearLeftMotor.configFactoryDefault();
-    m_frontRightMotor.configFactoryDefault();
+    m_frontRightMotor.configFactoryDefault();   
     m_rearLeftMotor.configFactoryDefault();
     // Drive Train Encoder Setup
     m_frontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, EncoderConstants.kPIDLoopIdx, EncoderConstants.kTimeoutMs);
@@ -65,6 +73,7 @@ public class DriveTrain extends SubsystemBase {
      // Pushing Drive Encoder Data to the SmartDashboard
     SmartDashboard.putNumber("LeftSensorPosition", m_frontLeftMotor.getSelectedSensorPosition(Constants.EncoderConstants.kPIDLoopIdx));
     SmartDashboard.putNumber("RightSensorPosition", m_frontRightMotor.getSelectedSensorPosition(Constants.EncoderConstants.kPIDLoopIdx));
+    m_dYawCurrent = m_pigeon.getYaw();
   }
   
   // Drive Type
@@ -72,8 +81,14 @@ public class DriveTrain extends SubsystemBase {
     // Drive with arcade drive.
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
-    m_robotDrive.arcadeDrive(-xSpeed, -ySpeed,true);
-    //DifferentialDrive.curvatureDriveIK(-xSpeed, -xSpeed, true);
+    //m_robotDrive.arcadeDrive(-xSpeed, -ySpeed,true);
+   
+    if (Math.abs(xSpeed) < 0.02 && (Math.abs(ySpeed) < 0.02)) {
+      m_robotDrive.stopMotor();
+    }
+    else {
+        m_robotDrive.curvatureDrive(-xSpeed, -ySpeed, true);
+    }
   }
 
   public void SetBrakes () {
@@ -91,18 +106,31 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void autoDrive(double speed) {
-    m_frontLeftMotor.set(ControlMode.PercentOutput, -speed);
+    double mRightSpeed = (speed + 0.015);
+    if (speed < 0) {
+      mRightSpeed = 0;
+    }
+
+    m_frontLeftMotor.set(ControlMode.PercentOutput, -speed + mRightSpeed);
     m_frontRightMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void Rotate(double angle) {
-    if (angle > 0) {
-      m_frontLeftMotor.set(ControlMode.PercentOutput, -angle);
-      m_frontRightMotor.set(ControlMode.PercentOutput, angle);
+  public void Rotate(double dAngle) {
+    if (dAngle > 0) {
+      //Set initi start postion
+        m_dYawTarget = m_dYawCurrent + dAngle;
+        boolean m_OnTarget = false;
+      do {
+        m_frontLeftMotor.set(ControlMode.PercentOutput, -0.2);
+        m_frontRightMotor.set(ControlMode.PercentOutput, 0.2);
+        if (m_dYawCurrent >= m_dYawTarget) {
+          m_OnTarget = true;
+        }
+      } while (m_OnTarget == true);
     }
-    if (angle < 0) {
-      m_frontLeftMotor.set(ControlMode.PercentOutput, angle);
-      m_frontRightMotor.set(ControlMode.PercentOutput, -angle);
+    if (dAngle < 0) {
+      m_frontLeftMotor.set(ControlMode.PercentOutput, 0.2);
+      m_frontRightMotor.set(ControlMode.PercentOutput,-0.2);
     }
   }
 

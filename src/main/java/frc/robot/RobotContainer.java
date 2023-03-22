@@ -65,6 +65,7 @@ public class RobotContainer {
   private final SetBrakeMode m_SetBrakes = new SetBrakeMode();
   //Set Coast drive train
   private final SetCoastMode m_CoastMode = new SetCoastMode();
+
   //Autonomous
   private final Auto1 m_auto1 = new Auto1(m_Elevator, m_ArmStage1, m_ArmStage2, m_Gripper, m_driveTrain);
 

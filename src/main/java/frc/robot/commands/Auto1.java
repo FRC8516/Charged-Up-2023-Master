@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.ArmStage1;
 import frc.robot.subsystems.ArmStage2;
@@ -22,12 +20,12 @@ public class Auto1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new OpenGripper(m_Gripper).withTimeout(0.5),
-      new MoveToPosition(m_driveTrain, -0.5).withTimeout(0.6),
+      new MoveToPosition(m_driveTrain, -0.18).withTimeout(0.65),
+      new CloseGripper(m_Gripper).withTimeout(0.15),
       new MoveToHighScore(m_Elevator, m_ArmStage2, m_ArmStage1).withTimeout(3),
-      new MoveToPosition(m_driveTrain, 0.6).withTimeout(0.6),
-      new CloseGripper(m_Gripper).withTimeout(0.5),
-      new MoveToPosition(m_driveTrain, -0.3).withTimeout(1),
+      new MoveToPosition(m_driveTrain, 0.15).withTimeout(0.75),
+      new CloseGripper(m_Gripper).withTimeout(0.15),
+      new MoveToPosition(m_driveTrain, -0.20).withTimeout(0.5),
       new MoveToDefault(m_Elevator, m_ArmStage1, m_ArmStage2).withTimeout(2),
       new MoveToPosition(m_driveTrain, -0.5).withTimeout(1.3)
     );

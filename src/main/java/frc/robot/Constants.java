@@ -81,6 +81,8 @@ public final class Constants {
         public static final String Default = "Default";
         public static final String Floor = "Floor";
         public static final String Load = "LoadStation";
+        public static final String BumpUp = "BumpUp";
+        public static final String BumpDown = "BumpDown";
     }
 
     //Led lights

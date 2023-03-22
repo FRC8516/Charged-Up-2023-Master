@@ -21,7 +21,6 @@ public class Gripper extends SubsystemBase {
   public Gripper() {
     //Enable the compressor...either have to use digital or analog here.  Else compressor does not run!
     mPneumaticHub.enableCompressorDigital();
-    
   }
 
   @Override
