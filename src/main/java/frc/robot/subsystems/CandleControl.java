@@ -34,6 +34,9 @@ public class CandleControl extends SubsystemBase {
       //call the subsystem for setting the led lights
       this.AllianceColor(currentAlliance);
     }
+    else {
+      this.ChangeLedColor(LedLights.Orange);
+    }
   } 
 
   //Init color from driver station connection
@@ -75,6 +78,9 @@ public class CandleControl extends SubsystemBase {
         break;
       case LedLights.Green:;
         m_candle.setLEDs(0, 255, 0);
+        break;
+      case LedLights.Orange:;
+        m_candle.setLEDs(255, 128, 0);
         break;
     }
 

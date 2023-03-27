@@ -81,14 +81,14 @@ public class DriveTrain extends SubsystemBase {
     // Drive with arcade drive.
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
-    //m_robotDrive.arcadeDrive(-xSpeed, -ySpeed,true);
-   
+    m_robotDrive.arcadeDrive(-xSpeed, -ySpeed,true);
+   /* 
     if (Math.abs(xSpeed) < 0.02 && (Math.abs(ySpeed) < 0.02)) {
       m_robotDrive.stopMotor();
     }
     else {
         m_robotDrive.curvatureDrive(-xSpeed, -ySpeed, true);
-    }
+    } */
   }
 
   public void SetBrakes () {

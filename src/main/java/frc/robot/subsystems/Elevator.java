@@ -125,7 +125,7 @@ public class Elevator extends SubsystemBase {
 		case RobotArmPos.Load:;
 			//Elevator Loading station
 			backUp = LoadPosition;
-			Key = ElevatorFloor;
+			Key = ElevatorLoad;
 			break;
 		}
 	   

@@ -92,6 +92,7 @@ public final class Constants {
         public static final String Red = "Red";
         public static final String Blue = "Blue";
         public static final String Green = "Green";
+        public static final String Orange = "Orange";
     }
 }
 
